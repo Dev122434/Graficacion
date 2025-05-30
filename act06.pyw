@@ -15,9 +15,9 @@ lblPass.grid(row=1, column=0, sticky='e', padx=10, pady=10)
 
 txtNombre = Entry(miFrame, textvariable=miNombre)
 txtNombre.grid(row=0, column=1, sticky='e', padx=10, pady=10)
-txtNombre.config(fg='red', font('Comic Sans MS', 18), justify="center")
-txtPass = Entry(miFrame, textvariable=miPass)
+txtNombre.config(fg='red', font=('Comic Sans MS', 18), justify="center")
+txtPass = Entry(miFrame, textvariable=miPass, show='*')
 txtPass.grid(row=1, column=1, sticky='e', padx=10, pady=10)
-txtPass.config(fg='red', font='Comic Sans MS', justify="center")
+txtPass.config(fg='blue', font=('Comic Sans MS', 18), justify="center")
 
 raiz.mainloop()
