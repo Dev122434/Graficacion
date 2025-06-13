@@ -1,154 +1,128 @@
-def numero_pulsado(num):
-    global operacion
-    global reset_pantalla
+from tkinter import *
 
-    if reset_pantalla != False:
+# Variables globales
+operacion = ""
+reset_pantalla = False
+resultado = 0
+memoria = 0
+
+# Funciones
+def numero_pulsado(num):
+    global reset_pantalla
+    if reset_pantalla:
         numero_pantalla.set(num)
         reset_pantalla = False
     else:
         numero_pantalla.set(numero_pantalla.get() + num)
 
-num1 = 0
-contador_resta = 0
+def limpiar():
+    global resultado, operacion, reset_pantalla
+    numero_pantalla.set("")
+    resultado = 0
+    operacion = ""
+    reset_pantalla = False
 
-def resta(num):
-    global operacion
-    global resultado
-    global num1
-    global contador_resta
-    global reset_pantalla
-
-    if (contador_resta == 0):
-        num1 = float(num)
-        resultado = num1
-    else:
-        resultado = float(resultado) - float(num)
-        numero_pantalla.set(resultado)
-        resultado = numero_pantalla.get()
-
-    contador_resta += 1
-    operacion = "resta"
-    reset_pantalla = True
-
-contador_suma = 0
+def calcular_resultado():
+    global resultado, operacion, reset_pantalla
+    try:
+        num2 = float(numero_pantalla.get())
+        if operacion == "suma":
+            resultado += num2
+        elif operacion == "resta":
+            resultado -= num2
+        elif operacion == "multiplicacion":
+            resultado *= num2
+        elif operacion == "division":
+            if num2 != 0:
+                resultado /= num2
+            else:
+                numero_pantalla.set("No se puede dividir")
+                return
+        numero_pantalla.set(str(resultado))
+        reset_pantalla = True
+        operacion = ""
+    except:
+        numero_pantalla.set("Error")
 
 def suma(num):
-    global operacion
-    global resultado
-    global num1
-    global contador_suma
-    global reset_pantalla
-
-    if (contador_suma == 0):
-        num1 = float(num)
-        resultado = num1
-    else:
-        resultado = float(resultado) + float(num)
-        numero_pantalla.set(resultado)
-        resultado = numero_pantalla.get()
-
-    contador_suma += 1
+    global resultado, operacion, reset_pantalla
+    resultado = float(num)
     operacion = "suma"
     reset_pantalla = True
 
-contador_mult = 0
+def resta(num):
+    global resultado, operacion, reset_pantalla
+    resultado = float(num)
+    operacion = "resta"
+    reset_pantalla = True
 
 def multiplicacion(num):
-    global operacion
-    global resultado
-    global num1
-    global contador_mult
-    global reset_pantalla
-
-    if (contador_mult == 0):
-        num1 = float(num)
-        resultado = num1
-    else:
-        resultado = float(resultado) * float(num)
-        numero_pantalla.set(resultado)
-        resultado = numero_pantalla.get()
-
-    contador_mult += 1
+    global resultado, operacion, reset_pantalla
+    resultado = float(num)
     operacion = "multiplicacion"
     reset_pantalla = True
 
-contador_div = 0
-
 def division(num):
-    global operacion
-    global resultado
-    global num1
-    global contador_div
-    global reset_pantalla
-
-    if (contador_div == 0):
-        num1 = float(num)
-        resultado = num1
-    else:
-        if (float(num) != 0):
-            resultado = float(resultado) / float(num)
-            numero_pantalla.set(resultado)
-            resultado = numero_pantalla.get()
-        else:
-            numero_pantalla.set("No se puede dividir")
-            resultado = numero_pantalla.get()
-
-    contador_div += 1
+    global resultado, operacion, reset_pantalla
+    resultado = float(num)
     operacion = "division"
     reset_pantalla = True
 
-from tkinter import *
+# Funciones de memoria
+memoria = 0
+
+def memoria_clear():
+    global memoria
+    memoria = 0
+    numero_pantalla.set("")  # Limpia la pantalla también (opcional)
+
+def memoria_recall():
+    numero_pantalla.set(str(memoria))
+
+def memoria_suma():
+    global memoria, reset_pantalla
+    try:
+        valor = float(numero_pantalla.get())
+        memoria += valor
+        reset_pantalla = True
+    except ValueError:
+        numero_pantalla.set("Error")
+
+def memoria_resta():
+    global memoria, reset_pantalla
+    try:
+        valor = float(numero_pantalla.get())
+        memoria -= valor
+        reset_pantalla = True
+    except ValueError:
+        numero_pantalla.set("Error")
 
 raiz = Tk()
-raiz.geometry("800x400")
-mi_frame = Frame(raiz)
-raiz.title("Calculadora Basica")
-mi_frame.pack()
-
-operacion = ""
-reset_pantalla = False
-resultado = 0
+raiz.title("Calculadora")
+raiz.resizable(False, False)
 
 numero_pantalla = StringVar()
 
-pantalla = Entry(mi_frame, textvariable=numero_pantalla)
-pantalla.grid(row=1, column=1, padx=10, pady=10, columnspan=4)
-pantalla.config(background="black", fg="#03f943", justify="right")
+pantalla = Entry(raiz, textvariable=numero_pantalla, font=("Arial", 20), bd=10, insertwidth=2, width=18,
+                 borderwidth=4, bg="black", fg="#03f943", justify="right")
+pantalla.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
 
-boton1 = Button(mi_frame, text="1", width=3, command=lambda:numero_pulsado("1"))
-boton1.grid(row=5, column=1)
-boton2 = Button(mi_frame, text="2", width=3, command=lambda:numero_pulsado("2"))
-boton2.grid(row=5, column=2)
-boton3 = Button(mi_frame, text="3", width=3, command=lambda:numero_pulsado("3"))
-boton3.grid(row=5, column=3)
-boton4 = Button(mi_frame, text="4", width=3, command=lambda:numero_pulsado("4"))
-boton4.grid(row=6, column=1)
-boton5 = Button(mi_frame, text="5", width=3, command=lambda:numero_pulsado("5"))
-boton5.grid(row=6, column=2)
-boton6 = Button(mi_frame, text="6", width=3, command=lambda:numero_pulsado("6"))
-boton6.grid(row=6, column=3)
-boton7 = Button(mi_frame, text="7", width=3, command=lambda:numero_pulsado("7"))
-boton7.grid(row=7, column=1)
-boton8 = Button(mi_frame, text="8", width=3, command=lambda:numero_pulsado("8"))
-boton8.grid(row=7, column=2)
-boton9 = Button(mi_frame, text="9", width=3, command=lambda:numero_pulsado("9"))
-boton9.grid(row=7, column=3)
+botones = [
+    ("MC", memoria_clear), ("MR", memoria_recall), ("M-", memoria_resta), ("M+", memoria_suma),
+    ("7", lambda: numero_pulsado("7")), ("8", lambda: numero_pulsado("8")), ("9", lambda: numero_pulsado("9")), ("/", lambda: division(numero_pantalla.get())),
+    ("4", lambda: numero_pulsado("4")), ("5", lambda: numero_pulsado("5")), ("6", lambda: numero_pulsado("6")), ("x", lambda: multiplicacion(numero_pantalla.get())),
+    ("1", lambda: numero_pulsado("1")), ("2", lambda: numero_pulsado("2")), ("3", lambda: numero_pulsado("3")), ("-", lambda: resta(numero_pantalla.get())),
+    ("0", lambda: numero_pulsado("0")), (".", lambda: numero_pulsado(".")), ("=", calcular_resultado), ("+", lambda: suma(numero_pantalla.get())),
+    ("AC", limpiar)
+]
 
-boton0 = Button(mi_frame, text="0", width=3, command=lambda:numero_pulsado("0"))
-boton0.grid(row=8, column=1)
-
-boton_rest = Button(mi_frame, text="-", width=3, command=lambda:resta(numero_pantalla.get()))
-boton_rest.grid(row=5, column=4)
-boton_sum = Button(mi_frame, text="+", width=3, command=lambda:suma(numero_pantalla.get()))
-boton_sum.grid(row=5, column=5)
-
-boton_mult = Button(mi_frame, text="*", width=3, command=lambda:multiplicacion(numero_pantalla.get()))
-boton_mult.grid(row=6, column=4)
-
-boton_div = Button(mi_frame, text="/", width=3, command=lambda:division(numero_pantalla.get()))
-boton_div.grid(row=6, column=5)
-
-boton_igual = Button(mi_frame, text="=", width=3, command=lambda:division(numero_pantalla.get()))
-boton_igual.grid(row=7, column=4)
+fila = 1
+col = 0
+for texto, comando in botones:
+    Button(raiz, text=texto, width=6, height=2, font=("Arial", 12), command=comando).grid(row=fila, column=col, padx=2, pady=2)
+    col += 1
+    if col > 3:
+        col = 0
+        fila += 1
 
 raiz.mainloop()
