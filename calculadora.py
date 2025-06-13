@@ -37,6 +37,7 @@ def calcular_resultado():
                 resultado /= num2
             else:
                 numero_pantalla.set("No se puede dividir")
+                reset_pantalla = True
                 return
         numero_pantalla.set(str(resultado))
         reset_pantalla = True
@@ -73,11 +74,12 @@ memoria = 0
 
 def memoria_clear():
     global memoria
+    numero_pantalla.set(memoria)
     memoria = 0
-    numero_pantalla.set("")  # Limpia la pantalla también (opcional)
+    #numero_pantalla.set("")  # Limpia la pantalla también (opcional)
 
 def memoria_recall():
-    numero_pantalla.set(str(memoria))
+    numero_pantalla.set(str(memoria))  # Muestra el número guardado
 
 def memoria_suma():
     global memoria, reset_pantalla
