@@ -13,13 +13,13 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS Proveedores(
                )
 ''')
 
-proveedores = [
-    ('Marcos', 10000.0, 14242424),
-    ('Jose', 20000.0, 2453535),
-    ('Julio', 30000.0, 243546)
-]
+# proveedores = [
+   # ('Marcos', 10000.0, 14242424),
+  #  ('Jose', 20000.0, 2453535),
+ #   ('Julio', 30000.0, 243546)
+#]
 
-cursor.executemany("INSERT INTO Proveedores VALUES(NULL, ?, ?, ?)", proveedores)
+# cursor.executemany("INSERT INTO Proveedores VALUES(NULL, ?, ?, ?)", proveedores)
 
 cursor.execute('SELECT * FROM Proveedores WHERE id = (SELECT MAX(id) FROM Proveedores)')
 
