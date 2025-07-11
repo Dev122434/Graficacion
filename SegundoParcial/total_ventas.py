@@ -22,6 +22,3 @@ conexion.commit()
 
 # Cerramos la conexion de la BD
 conexion.close()
-
-# Imprimimos los registros
-print(datos)

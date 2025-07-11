@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 a = [1, 2, 3, 4, 5]
-b = [50, 60, 70, 80]
+b = [50, 60, 70, 80, 12]
 
 # Metodo para agregar un titulo a la grafica
 plt.title('Programa 02')
